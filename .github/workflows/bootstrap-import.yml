@@ -1,0 +1,34 @@
+name: Import portfolio release
+
+on:
+  push:
+    paths:
+      - ".github/workflows/bootstrap-import.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    if: ${{ hashFiles('.bootstrap/part_aa') != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rebuild release archive
+        run: |
+          cat .bootstrap/part_aa .bootstrap/part_ab \
+              .bootstrap/rem_aa .bootstrap/rem_ab .bootstrap/rem_ac \
+              .bootstrap/rem_ad .bootstrap/rem_ae .bootstrap/rem_af \
+              | base64 --decode > /tmp/project.zip
+          mkdir -p /tmp/project
+          unzip -q /tmp/project.zip -d /tmp/project
+          rsync -a --exclude='.github' /tmp/project/fresh_github_pkg/ ./
+          rm -rf .bootstrap
+      - name: Publish project files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "feat: publish Freshservice asset context demo"
+          git push
