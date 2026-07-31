@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Privacy-safe service desk asset context demo">
+  <title>Asset Context — Portfolio Demo</title>
+  <link rel="stylesheet" href="../app/styles/style.css">
+  <link rel="stylesheet" href="preview.css">
+</head>
+<body>
+  <header class="desk-topbar">
+    <div class="desk-brand">
+      <span class="desk-brand__mark" aria-hidden="true">S</span>
+      <span>Service Desk</span>
+    </div>
+    <div class="desk-topbar__search">⌕&nbsp;&nbsp;Tickets, Benutzer und Assets durchsuchen</div>
+    <div class="desk-avatar">AY</div>
+  </header>
+
+  <nav class="desk-rail" aria-label="Primary navigation">
+    <button class="desk-rail__item is-active" aria-label="Tickets">▣</button>
+    <button class="desk-rail__item" aria-label="Users">◉</button>
+    <button class="desk-rail__item" aria-label="Assets">◇</button>
+    <button class="desk-rail__item" aria-label="Reports">▥</button>
+  </nav>
+
+  <main class="desk-layout">
+    <section class="desk-ticket">
+      <div class="desk-ticket__breadcrumb">Tickets&nbsp;&nbsp;/&nbsp;&nbsp;INC-2026-0417</div>
+      <div class="desk-ticket__heading">
+        <div>
+          <span class="desk-status">Open</span>
+          <h1>Notebook verliert regelmäßig die VPN-Verbindung</h1>
+        </div>
+        <button class="desk-primary">Reply</button>
+      </div>
+
+      <article class="desk-message">
+        <div class="desk-message__avatar">AM</div>
+        <div>
+          <div class="desk-message__meta"><strong>Alex Morgan</strong> · vor 18 Minuten</div>
+          <p>Seit heute Morgen wird die Verbindung im Homeoffice nach wenigen Minuten getrennt. Ein Neustart hat das Problem nicht behoben.</p>
+          <p>Könnt ihr bitte prüfen, ob mein Gerät beziehungsweise das VPN-Profil betroffen ist?</p>
+        </div>
+      </article>
+
+      <section class="desk-timeline">
+        <h2>Activities</h2>
+        <div class="desk-timeline__entry"><span></span>Ticket wurde der Gruppe <strong>IT Support</strong> zugewiesen.</div>
+        <div class="desk-timeline__entry"><span></span>Priorität wurde auf <strong>Medium</strong> gesetzt.</div>
+      </section>
+    </section>
+
+    <aside class="desk-sidebar">
+      <section class="desk-panel">
+        <header class="desk-panel__header">
+          <h2>Requester info</h2>
+          <button aria-label="More options">•••</button>
+        </header>
+        <div class="desk-requester">
+          <div class="desk-requester__avatar">AM</div>
+          <div>
+            <strong>Alex Morgan</strong>
+            <a href="mailto:alex.morgan@example.test">alex.morgan@example.test</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="desk-app-panel">
+        <div class="desk-app-panel__bar">
+          <span>Asset Context</span>
+          <span class="desk-demo-tag">Portfolio demo</span>
+        </div>
+        <div class="asset-app" data-asset-context-root>
+          <p class="asset-muted">Initialisiere …</p>
+        </div>
+      </section>
+
+      <section class="desk-preview-controls" aria-label="Demo states">
+        <span>Preview state</span>
+        <div>
+          <a href="/?requester=alex.morgan@example.test" data-state-link>With assets</a>
+          <a href="/?requester=no.assets@example.test" data-state-link>Empty</a>
+          <a href="/?state=error" data-state-link>Error</a>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <dialog class="asset-detail" data-asset-detail>
+    <button class="asset-detail__close" data-close-dialog aria-label="Close">×</button>
+    <span class="asset-detail__eyebrow">Synthetic asset record</span>
+    <h2 data-asset-detail-title>Asset</h2>
+    <dl>
+      <div><dt>Status</dt><dd>Assigned</dd></div>
+      <div><dt>Source</dt><dd>Local demo dataset</dd></div>
+      <div><dt>Integration</dt><dd>External asset system intentionally not connected</dd></div>
+    </dl>
+  </dialog>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    window.ASSET_CONTEXT_DEMO = {
+      requesterEmail: params.get('requester') || 'alex.morgan@example.test',
+      state: params.get('state') || ''
+    };
+  </script>
+  <script src="../app/scripts/core.js"></script>
+  <script src="../app/scripts/app.js"></script>
+  <script src="preview.js"></script>
+</body>
+</html>
