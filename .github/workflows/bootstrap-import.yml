@@ -12,7 +12,6 @@ permissions:
 jobs:
   import:
     runs-on: ubuntu-latest
-    if: ${{ hashFiles('.bootstrap/part_aa') != '' }}
     steps:
       - uses: actions/checkout@v4
       - name: Rebuild release archive
